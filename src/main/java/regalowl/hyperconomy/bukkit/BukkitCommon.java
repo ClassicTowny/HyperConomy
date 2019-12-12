@@ -123,7 +123,7 @@ public class BukkitCommon {
 
 	protected boolean isTransactionSign(HLocation l) {
 		Block b = getBlock(l);
-		if (b != null && b.getType().equals(Material.SIGN_POST) || b != null && b.getType().equals(Material.WALL_SIGN)) {
+		if (b != null && BukkitUtils.isLegacySignPost(b.getType()) || b != null && BukkitUtils.isWallSign(b.getType())) {
 			Sign s = (Sign) b.getState();
 			String line3 = ChatColor.stripColor(s.getLine(2)).trim();
 			if (line3.equalsIgnoreCase("[sell:buy]") || line3.equalsIgnoreCase("[sell]") || line3.equalsIgnoreCase("[buy]")) {
@@ -135,7 +135,7 @@ public class BukkitCommon {
 
 	protected boolean isInfoSign(HLocation l) {
 		Block b = getBlock(l);
-		if (b != null && b.getType().equals(Material.SIGN_POST) || b != null && b.getType().equals(Material.WALL_SIGN)) {
+		if (b != null && BukkitUtils.isLegacySignPost(b.getType()) || b != null && BukkitUtils.isWallSign(b.getType())) {
 			Sign s = (Sign) b.getState();
 			String type = ChatColor.stripColor(s.getLine(2)).trim().replace(":", "").replace(" ", "");
 			if (SignType.isSignType(type)) return true;
@@ -181,8 +181,8 @@ public class BukkitCommon {
 		if (b == null) return null;
 		for (BlockFace cface : planeFaces) {
 			Block block = b.getRelative(cface);
-			if (block.getType().equals(Material.WALL_SIGN)) {
-				org.bukkit.material.Sign sign = (org.bukkit.material.Sign) block.getState().getData();
+			if (BukkitUtils.isWallSign(block.getType())) {
+				org.bukkit.material.Attachable sign = (org.bukkit.material.Attachable) block.getState().getData();
 				BlockFace attachedface = sign.getFacing();
 				if (block.getRelative(attachedface.getOppositeFace()).equals(b)) {
 					Sign s = (Sign) block.getState();

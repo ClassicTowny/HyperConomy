@@ -53,6 +53,7 @@ public class NBTTools {
 			nmsItemStackGetTagMethod = nmsItemStack.getClass().getMethod("getTag");
 			nmsItemStackSetTagMethod = nmsItemStack.getClass().getMethod("setTag", nbtTag.getClass());
 			nbtTagCompoundHasKeyMethod = nbtTag.getClass().getMethod("hasKey", String.class);
+			//nbtTagCompoundCMethod = nbtTag.getClass().getMethod("c");//1.12
 			nbtTagCompoundCMethod = nbtTag.getClass().getMethod("c");
 			nbtTagCompoundSetMethod = nbtTag.getClass().getMethod("set", String.class, nbtBase);
 			nbtTagCompoundGetCompoundMethod = nbtTag.getClass().getMethod("getCompound", String.class);

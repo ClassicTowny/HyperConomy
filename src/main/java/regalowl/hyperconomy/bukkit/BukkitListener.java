@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -21,6 +22,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -29,7 +31,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
@@ -371,24 +372,27 @@ public class BukkitListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onPlayerPickupItemDisplayEvent(PlayerPickupItemEvent event) {
-		Item item = event.getItem();
-		if (!event.isCancelled()) {
-			List<MetadataValue> meta = item.getMetadata("HyperConomy");
-			for (MetadataValue cmeta : meta) {
-				if (cmeta.asString().equalsIgnoreCase("item_display")) {
+	public void onPlayerPickupItemDisplayEvent(EntityPickupItemEvent event) {
+		if(event.getEntityType()==EntityType.PLAYER) {
+			Item item = event.getItem();
+			if (!event.isCancelled()) {
+				List<MetadataValue> meta = item.getMetadata("HyperConomy");
+				for (MetadataValue cmeta : meta) {
+					if (cmeta.asString().equalsIgnoreCase("item_display")) {
+						event.setCancelled(true);
+						return;
+					}
+				}
+			}
+			if (minimal) return;
+			for (ItemDisplay display : hc.getItemDisplay().getDisplays()) {
+				if (display.getEntityId() == item.getEntityId() || display.getItem().getItem().equals(item)) {
 					event.setCancelled(true);
 					return;
 				}
 			}
 		}
-		if (minimal) return;
-		for (ItemDisplay display : hc.getItemDisplay().getDisplays()) {
-			if (display.getEntityId() == item.getEntityId() || item.equals(display.getItem())) {
-				event.setCancelled(true);
-				return;
-			}
-		}
+		
 	}
 	
 	@EventHandler

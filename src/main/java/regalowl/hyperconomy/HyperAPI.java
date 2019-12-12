@@ -261,8 +261,8 @@ public class HyperAPI implements API {
 	public ArrayList<TradeObject> getAvailableObjects(HyperPlayer p, int startingPosition, int limit) {
 		ArrayList<TradeObject> availableObjects = getAvailableObjects(p);
 		ArrayList<TradeObject> availableSubset = new ArrayList<TradeObject>();
-		for (int i = startingPosition; i <= limit; i++) {
-			if (availableObjects.indexOf(i) != -1) {
+		for (int i = startingPosition; i <= limit; i++) {		
+			if (availableObjects.indexOf(availableObjects.get(i)) != -1) {
 				availableSubset.add(availableObjects.get(i));
 			}
 		}
@@ -281,7 +281,7 @@ public class HyperAPI implements API {
 		ArrayList<TradeObject> availableObjects = getAvailableObjects(shopname);
 		ArrayList<TradeObject> availableSubset = new ArrayList<TradeObject>();
 		for (int i = startingPosition; i <= limit; i++) {
-			if (availableObjects.indexOf(i) != -1) {
+			if (availableObjects.indexOf(availableObjects.get(i)) != -1) {
 				availableSubset.add(availableObjects.get(i));
 			}
 		}

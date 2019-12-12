@@ -9,7 +9,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
-import net.milkbowl.vault.Vault;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;
@@ -34,6 +33,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.Attachable;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
@@ -138,7 +138,7 @@ public class BukkitConnector extends JavaPlugin implements MineCraftConnector, L
 	@Override
 	public void checkExternalEconomyRegistration() {
 		Plugin vault = getServer().getPluginManager().getPlugin("Vault");
-		vaultInstalled = (vault != null & vault instanceof Vault) ? true:false;
+		vaultInstalled = (vault != null) ? true:false;
 		useExternalEconomy = hc.gYH().getFileConfiguration("config").getBoolean("economy-plugin.use-external");
 		if (!vaultInstalled) useExternalEconomy = false;
 		if (!useExternalEconomy && vaultInstalled && hc.gYH().gFC("config").getBoolean("economy-plugin.hook-internal-economy-into-vault")) {
@@ -641,7 +641,7 @@ public class BukkitConnector extends JavaPlugin implements MineCraftConnector, L
 	public boolean canHoldChestShopSign(HLocation l) {
 		Block b = common.getBlock(l);
 		Material m = b.getType();
-		if (m == Material.ICE || m == Material.LEAVES || m == Material.SAND || m == Material.GRAVEL || m == Material.SIGN || m == Material.SIGN_POST || m == Material.TNT) {
+		if (m == Material.ICE || BukkitUtils.isLeaves(m) || m == Material.SAND || m == Material.GRAVEL || BukkitUtils.isLegacySignPost(m) || BukkitUtils.isWallSign(m) || m == Material.TNT) {
 			return false;
 		}
 		return true;
@@ -664,14 +664,13 @@ public class BukkitConnector extends JavaPlugin implements MineCraftConnector, L
 	public HSign getSign(HLocation location) {
 		if (location == null) return null;
 		Block b = common.getLocation(location).getBlock();
-		if (b != null && (b.getType().equals(Material.SIGN_POST) || b.getType().equals(Material.WALL_SIGN))) {
+		if (b != null && (BukkitUtils.isLegacySignPost(b.getType()) || BukkitUtils.isWallSign(b.getType()))) {
 			Sign s = (Sign) b.getState();
-			boolean isWallSign = (b.getType().equals(Material.WALL_SIGN)) ? true:false;
 			ArrayList<String> lines = new ArrayList<String>();
 			for (String l:s.getLines()) {
 				lines.add(l);
 			}
-			HSign sign = new HSign(hc, new HLocation(location), lines, isWallSign);
+			HSign sign = new HSign(hc, new HLocation(location), lines, BukkitUtils.isWallSign(b.getType()));
 			return sign;
 		}
 		return null;
@@ -694,7 +693,7 @@ public class BukkitConnector extends JavaPlugin implements MineCraftConnector, L
 	@Override
 	public HBlock getAttachedBlock(HSign sign) {
 		Block b = common.getBlock(sign.getLocation());
-		org.bukkit.material.Sign msign = (org.bukkit.material.Sign) b.getState().getData();
+		Attachable msign = (Attachable) b.getState().getData();
 		BlockFace attachedface = msign.getAttachedFace();
 		Block attachedblock = b.getRelative(attachedface);
 		return common.getBlock(attachedblock);
