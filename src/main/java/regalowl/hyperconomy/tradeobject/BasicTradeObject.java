@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.bukkit.NamespacedKey;
+
 import regalowl.simpledatalib.CommonFunctions;
 import regalowl.simpledatalib.sql.SQLWrite;
 import regalowl.hyperconomy.HyperConomy;
@@ -785,7 +787,7 @@ public class BasicTradeObject implements TradeObject {
 	@Override
 	public int getEnchantmentLevel() {return 0;}
 	@Override
-	public String getEnchantmentName() {return null;}
+	public NamespacedKey getEnchantmentKey() {return null;}
 	@Override
 	public boolean matchesEnchantment(HEnchantment enchant) {return false;}
 	

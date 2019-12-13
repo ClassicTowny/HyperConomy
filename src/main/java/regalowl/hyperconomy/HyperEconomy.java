@@ -375,7 +375,7 @@ public class HyperEconomy implements Serializable {
 	public synchronized String getEnchantNameWithoutLevel(String bukkitName) {
 		for (TradeObject ho:tradeObjectsNameMap.values()) {
 			if (ho.getType() == TradeObjectType.ENCHANTMENT) {
-				if (ho.getEnchantmentName().equalsIgnoreCase(bukkitName)) {
+				if (ho.getEnchantmentKey().toString().equalsIgnoreCase(bukkitName)) {
 					String name = ho.getName();
 					return name.substring(0, name.length() - 1);
 				}

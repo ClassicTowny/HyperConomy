@@ -5,6 +5,8 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import org.bukkit.NamespacedKey;
+
 import regalowl.hyperconomy.HyperConomy;
 import regalowl.hyperconomy.HyperEconomy;
 import regalowl.hyperconomy.account.HyperPlayer;
@@ -23,9 +25,10 @@ public class TradeEnchant extends BasicTradeObject implements TradeObject {
 	private HEnchantment getHEnchant() {
 		return new HEnchantment(objectData);
 	}
+	
 	@Override
-	public String getEnchantmentName() {
-		return getHEnchant().getEnchantmentName();
+	public NamespacedKey getEnchantmentKey() {
+		return getHEnchant().getEnchantmentKey();
 	}
 
 	

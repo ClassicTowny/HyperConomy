@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import java.util.Map;
 
+import org.bukkit.NamespacedKey;
+
 import regalowl.hyperconomy.HyperConomy;
 import regalowl.hyperconomy.account.HyperPlayer;
 import regalowl.hyperconomy.inventory.HEnchantment;
@@ -421,7 +423,7 @@ public interface TradeObject extends Comparable<TradeObject>, Serializable {
 	/**
 	 * @return The TradeObject's Enchantment name. (Can only be used with Enchantments.)
 	 */
-	public String getEnchantmentName();
+	public NamespacedKey getEnchantmentKey();
 	/**
 	 * @param stack
 	 * @return True if this TradeObject represents the given SerializableItemStack, false if not.

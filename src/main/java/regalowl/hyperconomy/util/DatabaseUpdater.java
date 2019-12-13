@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
+
 import regalowl.simpledatalib.CommonFunctions;
 import regalowl.simpledatalib.file.FileConfiguration;
 import regalowl.simpledatalib.sql.Field;
@@ -102,7 +105,7 @@ public class DatabaseUpdater {
 						sw.addToQueue("UPDATE hyperconomy_objects SET DATA = '"+n.serialize()+"' WHERE NAME = '"+name+"'");
 					} else if (type.equalsIgnoreCase("ENCHANTMENT")) {
 						SerializableEnchantment sis = new SerializableEnchantment(data);
-						HEnchantment n = new HEnchantment(sis.getEnchantmentName(), sis.getLvl());
+						HEnchantment n = new HEnchantment(sis.getEnchantmentKey().toString(), sis.getLvl());
 						sw.addToQueue("UPDATE hyperconomy_objects SET DATA = '"+n.serialize()+"' WHERE NAME = '"+name+"'");
 					}
 				}

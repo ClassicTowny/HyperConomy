@@ -532,7 +532,7 @@ public class BukkitCommon {
         	itemMeta.setDisplayName(hItemMeta.getDisplayName());
         	itemMeta.setLore(hItemMeta.getLore());
     		for (HEnchantment se:hItemMeta.getEnchantments()) {
-    			itemMeta.addEnchant(Enchantment.getByName(se.getEnchantmentName()), se.getLvl(), true);
+    			itemMeta.addEnchant(Enchantment.getByKey(se.getEnchantmentKey()), se.getLvl(), true);
     		}
     		for (HItemFlag f:hItemMeta.getItemFlags()) {
     			itemMeta.addItemFlags(ItemFlag.valueOf(f.getItemFlag()));
@@ -546,7 +546,7 @@ public class BukkitCommon {
         		HEnchantmentStorageMeta sItemMeta = (HEnchantmentStorageMeta)hItemMeta;
         		EnchantmentStorageMeta esm = (EnchantmentStorageMeta)itemMeta;
         		for (HEnchantment se:sItemMeta.getEnchantments()) {
-        			esm.addStoredEnchant(Enchantment.getByName(se.getEnchantmentName()), se.getLvl(), true);
+        			esm.addStoredEnchant(Enchantment.getByKey(se.getEnchantmentKey()), se.getLvl(), true);
         		}
         	} else if (hItemMeta instanceof HBookMeta) {
         		HBookMeta sItemMeta = (HBookMeta)hItemMeta;

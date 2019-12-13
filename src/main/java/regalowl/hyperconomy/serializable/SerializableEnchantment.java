@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
@@ -16,7 +17,7 @@ public class SerializableEnchantment extends SerializableObject implements Seria
     private int lvl;
  
 	public SerializableEnchantment(Enchantment e, int lvl) {
-        this.enchantment = e.getName();
+        this.enchantment = e.getKey().toString();
         this.lvl = lvl;
     }
 
@@ -28,7 +29,7 @@ public class SerializableEnchantment extends SerializableObject implements Seria
 			ois.close();
 			if (!(o instanceof SerializableEnchantment)) {return;}
 			SerializableEnchantment se = (SerializableEnchantment)o;
-	        this.enchantment = se.getEnchantmentName();
+	        this.enchantment = se.getEnchantmentKey().toString();
 	        this.lvl = se.getLvl();
     	} catch (Exception e) {
     		
@@ -36,11 +37,11 @@ public class SerializableEnchantment extends SerializableObject implements Seria
     }
 
 	public Enchantment getEnchantment() {
-		return Enchantment.getByName(enchantment);
+		return Enchantment.getByKey(getEnchantmentKey());
     }
 
-	public String getEnchantmentName() {
-		return enchantment;
+	public NamespacedKey getEnchantmentKey() {
+		return NamespacedKey.minecraft(enchantment);
 	}
 
 	public int getLvl() {

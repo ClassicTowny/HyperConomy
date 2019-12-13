@@ -1,6 +1,8 @@
 package regalowl.hyperconomy.tradeobject;
 
 
+import org.bukkit.NamespacedKey;
+
 import regalowl.hyperconomy.HyperConomy;
 import regalowl.hyperconomy.account.HyperPlayer;
 import regalowl.hyperconomy.inventory.HEnchantment;
@@ -16,8 +18,8 @@ public class ShopTradeEnchant extends BasicShopTradeObject implements TradeObjec
 	}
 
 	@Override
-	public String getEnchantmentName() {
-		return getParentTradeObject().getEnchantmentName();
+	public NamespacedKey getEnchantmentKey() {
+		return getParentTradeObject().getEnchantmentKey();
 	}
 	@Override
 	public double getBuyPrice(EnchantmentClass enchantClass) {

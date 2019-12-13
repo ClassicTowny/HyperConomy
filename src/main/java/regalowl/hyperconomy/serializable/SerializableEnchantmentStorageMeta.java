@@ -64,7 +64,7 @@ public class SerializableEnchantmentStorageMeta extends SerializableItemMeta imp
 			esm.addEnchant(se.getEnchantment(), se.getLvl(), true);
 		}
 		for (SerializableEnchantment se:storedEnchantments) {
-			esm.addStoredEnchant(Enchantment.getByName(se.getEnchantmentName()), se.getLvl(), true);
+			esm.addStoredEnchant(Enchantment.getByKey(se.getEnchantmentKey()), se.getLvl(), true);
 		}
 		return esm;
 	}
